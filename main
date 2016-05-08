@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 
-/* REFERÊNCIAS: 
-	http://bsi.ceavi.udesc.br:8080/basiqa/
-	http://inf.ufrgs.br/~rgrunitzki/papers/Grunitzki&2013.pdf			
+/* 
+	REFERÊNCIAS: 
+		http://bsi.ceavi.udesc.br:8080/basiqa/
+		http://inf.ufrgs.br/~rgrunitzki/papers/Grunitzki&2013.pdf			
 */
 
 double q9 ( double indice ) { //  Oxigênio Dissolvido : PESO 0.17
@@ -28,7 +29,8 @@ double q1 ( double indice ) { // Coliformes Fecais : PESO 0.15
     if ( indice > 5e5 )
     	return 3.0;
 
-    indice = A + ( B * log(indice)) + ( C * log ( pow(indice, 2))) + (D * log (pow (indice, 3)));
+	// v1.1 - Ajuste na equação para estimação da qualidade em funcao de quantidade de coliformes fecais
+    indice = A + ( B * log(indice)) + ( C * pow( log(indice), 2 )) + (D * pow( log(indice), 3 ));
 
     return indice;
 
@@ -148,7 +150,7 @@ int main (void){
 	Func funcao[9] =  // Vetor apontando para as funções das respectivas equações
 		{q1, q2, q3, q4, q5, q6, q7, q8, q9};
  	
-	 double peso[9] = // Vetor usado para armazenar os pesos de cada parametro
+	double peso[9] = // Vetor usado para armazenar os pesos de cada parâmetro
 	 	{0.15, 0.12, 0.10, 0.10, 0.10, 0.10, 0.08, 0.08, 0.17};	  
     
     
