@@ -12,7 +12,7 @@ double q9 ( double indice ) { //  Oxigênio Dissolvido : PESO 0.17
     double A = 100.8, B = -106, C = -3745;
     
     printf("Oxigenio\n");
-    if ( indice == 140.0 )
+    if ( indice > 140.0 )
     	return 47.0;
 
     indice = A * exp ( pow( (indice + B), 2 ) / C );
@@ -23,14 +23,15 @@ double q9 ( double indice ) { //  Oxigênio Dissolvido : PESO 0.17
 
 double q1 ( double indice ) { // Coliformes Fecais : PESO 0.15
 
-    double A = 98.03, B = -36.45, C = 3.138, D = 0.06776;
+    double A = 98.03, B = -36.45, C = 3.14, D = 0.067;
     
     printf("Coliformes\n");
-    if ( indice > 5e5 )
+    if ( indice > 1e5 )
     	return 3.0;
 
 	// v1.1 - Ajuste na equação para estimação da qualidade em funcao de quantidade de coliformes fecais
-    indice = A + ( B * log(indice)) + ( C * pow( log(indice), 2 )) + (D * pow( log(indice), 3 ));
+	// v1.2 - Ajustado a base do Log 	
+    indice = A + ( B * log10(indice)) + ( C * pow( log10(indice), 2 )) + (D * pow( log10(indice), 3 ));
 
     return indice;
 
@@ -41,11 +42,11 @@ double q2 ( double indice ) { // pH : PESO 0.12
     double A = 0.05421, B = 1.23, C = -0.09873;
     
     printf("pH\n");
-    if ( indice > 12 )
+    if ( indice >= 12 )
     	return 3.0;
     	
-    if ( indice < 2 )
-		return 2.0;	
+    if ( indice <= 2 )
+	return 2.0;	
 
     indice = A * pow(indice, ((B*indice) + (C*pow(indice,2)))) + 5.213;
 
@@ -53,8 +54,8 @@ double q2 ( double indice ) { // pH : PESO 0.12
 }
 
 double q3 ( double indice ) { // Demanda Bioquímica de Oxigênio : PESO 0.1
-
-    double A = 102.6, B = -0.01101;
+	//v 1.2 alterada a variavel "B"
+    double A = 102.6, B = -0.1101;
     
     printf("DBO\n");
     if ( indice > 30 )
@@ -67,12 +68,12 @@ double q3 ( double indice ) { // Demanda Bioquímica de Oxigênio : PESO 0.1
 }
 
 double q5 ( double indice ) { // Fósforo total : PESO 0.1
-
-    double A = 213.7, B = -1.680, C = 0.3325;
+	
+    double A = 213.7, B = -1.68, C = 0.3325;
     
     printf("FOSFORO\n");
     if ( indice > 10.0 )
-    	return 1.0;
+    	return 5.0;
 
     indice = A * exp((B*pow(indice, C)));
 
@@ -85,7 +86,7 @@ double q4 ( double indice ) { // Nitrogênio total : PESO 0.1
     double A = 98.96, B = -0.2232, C = -0.006457;
     
     printf("Nitrogenio\n");
-    if ( indice > 100 )
+    if ( indice > 90 )
     	return 1.0;
 
     indice = A * pow(indice, (B + (C*indice)));
@@ -116,9 +117,9 @@ double q6 ( double indice ) { // Variação de Temperatura : PESO 0.1
     	return 1;
     	
     if ( indice > 15 )
-		return 9;	
+	return 9;	
 
-    indice = 1 / ( ( A * pow ( (indice + B) , 2 )) + C );
+    indice = (1 / ( ( A * pow ( (indice + B) , 2 )) + C ));
 
     return indice;
 }
@@ -129,7 +130,7 @@ double q8 ( double indice ) { // Sólidos Totais : PESO 0.08
     
     printf("SOLIDOS\n");
     if ( indice > 500 )
-    	return 32.0;
+    	return 30.0;
 
     indice = (A * exp( (B*indice) + (C*sqrt(indice)))) + (D * indice );
 
@@ -176,3 +177,5 @@ int main (void){
 
 //Lucas Ricciardi de Salles; 
 //lucas.ricciardi@outlook.com
+//Codigo alterado por Gustavo Chequer
+//gustavochequer@gmail.com
