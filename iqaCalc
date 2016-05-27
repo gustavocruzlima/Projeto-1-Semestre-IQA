@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <math.h>
+#include "funcoes.h"
+
+/* 
+	REFERÊNCIAS: 
+		http://bsi.ceavi.udesc.br:8080/basiqa/
+		http://inf.ufrgs.br/~rgrunitzki/papers/Grunitzki&2013.pdf			
+*/
+
+typedef double (*Func) (double);
+
+double iqaCalc (int* param){
+
+	
+	double iqa = 1; /* Variável usada para armazenar o valor do IQA calculado */
+	
+	int i, j; /*  Variáveis para serem usadas no controle de fluxo e laços */
+	
+	Func funcao[9] =  /* Vetor apontando para as funções das respectivas equações */
+		{q1, q2, q3, q4, q5, q6, q7, q8, q9};
+ 	
+	double peso[9] = /* Vetor usado para armazenar os pesos de cada parâmetro */
+ 	 	{0.15, 0.12, 0.10, 0.10, 0.10, 0.10, 0.08, 0.08, 0.17};	  
+    
+    
+    for (i=0; i<9; i++) {
+		
+		/* 	O programa receberá os paramêtro paramêtro passado para o usuário, que será armazenado na variável 'param'
+		e então passará o valor de 'param' como paramêtro para cada uma das respectivas equações descritas no artigo.
+			Cada equação foi protótipada numa função de nome 'qN' sendo N o número de cada equação, variando de 1 até 9.
+			Para facilitar o trabalho, foi linearizado o processo. A cada iteração, a variável 'param' será passada, através de um vetor,
+		para uma equação diferente. O valor obtido com o cálculo será então multiplicado pela variável 'iqa' aonde será armazenado, ao 
+		final do laço, o valor do iqa calculado.	
+		*/
+		
+		iqa *= pow (funcao[i](param[i]), peso[i]);
+		printf("Peso : %f\n", peso[i]);
+	
+	}
+	
+	printf("IQA = %f\n", iqa);
+    
+}
